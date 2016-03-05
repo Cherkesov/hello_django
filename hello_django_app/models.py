@@ -3,20 +3,6 @@ from django.db import models
 # Create your models here.
 
 
-class Recipe(models.Model):
-    title = models.CharField(max_length=512)
-    description = models.TextField()
-    # proportions = models.
-
-    def __str__(self):
-        return self.title
-
-    def __unicode__(self):
-        return self.title
-
-    pass
-
-
 class Ingredient(models.Model):
     title = models.CharField(max_length=256)
 
@@ -41,9 +27,30 @@ class Measure(models.Model):
     pass
 
 
+class Recipe(models.Model):
+    title = models.CharField(max_length=512)
+    description = models.TextField()
+    image = models.ImageField(upload_to='recipe', null=True, blank=True)
+    # proportions = models.fi Rela(to=Proportion, field="recipe")
+    # proportions = models.OneToMany(to=Proportion)
+    # proportions = None
+
+    def __str__(self):
+        return self.title
+
+    def __unicode__(self):
+        return self.title
+
+    pass
+
+
 class Proportion(models.Model):
     ingredient = models.ForeignKey(Ingredient)
     measure = models.ForeignKey(Measure)
     value = models.PositiveIntegerField()
-    recipe = models.ForeignKey(Recipe)
+    recipe = models.ForeignKey(to=Recipe, related_name="proportions", null=False)
+
+    def __str__(self):
+        return '%d %s of %s' % (self.value, self.measure, self.ingredient)
+
     pass

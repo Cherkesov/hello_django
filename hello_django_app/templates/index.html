@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block meta_title %}
+    Home page
+{% endblock meta_title %}
+
+{% block page_content %}
+    <form>
+        {% for ingredient in ingredients_list %}
+            <div>
+                <input id="ingredient_{{ ingredient.id }}" type="checkbox"
+                       name="ingredient[]"
+                       value="{{ ingredient.id }}"/>
+                <label for="ingredient_{{ ingredient.id }}">
+                    {{ ingredient.title }}
+                </label>
+            </div>
+        {% endfor %}
+
+        <button type="submit">Search</button>
+    </form>
+
+    <ul>
+        {% for recipe in recipes_list %}
+            <li>
+                {{ recipe.title }} ({{ recipe.proportions.all|join:", " }})
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock page_content %}
