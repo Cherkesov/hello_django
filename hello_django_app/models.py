@@ -31,9 +31,6 @@ class Recipe(models.Model):
     title = models.CharField(max_length=512)
     description = models.TextField()
     image = models.ImageField(upload_to='recipe', null=True, blank=True)
-    # proportions = models.fi Rela(to=Proportion, field="recipe")
-    # proportions = models.OneToMany(to=Proportion)
-    # proportions = None
 
     def __str__(self):
         return self.title
